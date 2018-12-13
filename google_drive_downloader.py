@@ -30,7 +30,7 @@ class GDownloader():
         alt_svc = dict(meta)["Alt-Svc"]
         ma = re.findall(r"ma=\d+", alt_svc)[0]
         #extract int
-        self.total_size = int(ma.replace("ma=", ""))
+        self.total_size = int(ma.replace("ma=", "")) / (1024 * 1024)
         self.filename = None
         self.headers = None
         #progress bar
@@ -55,7 +55,7 @@ class GDownloader():
         """
             monitor progress of download
         """
-        downloaded = count * block_size
+        downloaded = (count * block_size) / (1024 * 1024)
         if downloaded < self.total_size:
             self.pbar.update(downloaded)
         else:
@@ -87,4 +87,4 @@ if __name__ == "__main__":
     args = vars(parser.parse_args())
     downloader = GDownloader(args['shareable_link'], args["full_path"])
     downloader.download()
-    print(f"Downloaded to location {downloader.filename}")
+    print(f"Downloaded to location {downloader.filename}\nSize of download {round(downloader.total_size, 2)}MB")
