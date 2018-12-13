@@ -5,14 +5,17 @@
 """
 
 import argparse
-import progressbar as pb
 import os
 import re
 import sys
 import time
 import urllib
 from multiprocessing.dummy import Pool
-from urllib.request import urlretrieve, urlopen
+from urllib.request import urlopen, urlretrieve
+
+import numpy as np
+import pandas as pd
+import progressbar as pb
 
 
 class GDownloader():
@@ -71,20 +74,59 @@ class GDownloader():
             self.filename, self.headers = urlretrieve(url=self.download_link,
                                             filename=self.path, 
                                             reporthook=self.reporthook)
+            print(f"Downloaded to location {self.filename}\nSize of download {round(self.total_size, 2)}MB")
         else:
             self.pbar.start()
             self.filename, self.headers = urlretrieve(url=self.download_link, 
                                             reporthook=self.reporthook)
+            print(f"Downloaded to location {self.filename}\nSize of download {round(self.total_size, 2)}MB")
+
+
+def create_csv_downloads(csv_path):
+    """ 
+        parses a csv of (shareable_link, path)
+    """
+    downloader_list = list()
+    total_size = 0
+    if not str(csv_path).endswith('.csv'):
+        sys.exit("Not a valid (.csv) file")
+    try:
+        df = pd.read_csv(csv_path, header=None).fillna("None")
+        for i in range(0, len(df)):
+            path = df.iloc[i][1]
+            shareable_link = df.iloc[i][0]
+            downloader = None
+            if path == "None":
+                downloader = GDownloader(shareable_link)
+                total_size += downloader.total_size
+                downloader_list.append(downloader)
+            else:
+                downloader = GDownloader(shareable_link, path)
+                total_size += downloader.total_size
+                downloader_list.append(downloader)
+        main_pb = pb.ProgressBar(maxval=total_size)
+        main_pb.start()
+        for i in downloader_list:
+            i.download()
+            main_pb.update(i.total_size)
+        main_pb.finish()
+        print(f"Total Download Finished, total_size was {round(total_size, 2)}MB")
+    except Exception as e:
+        sys.exit(e)
 
 
 
 if __name__ == "__main__":
     #setup command line arguments
     parser = argparse.ArgumentParser(description='Google Drive Resource Downloader')
-    parser.add_argument('-sl','--shareable-link', help='Shareable link of resource', required=True)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-csv', '--csv_path', help='full path to csv file of shareable links and paths')
+    group.add_argument('-sl','--shareable-link', help='Shareable link of resource')
     parser.add_argument('-path','--full-path', help='Full path plus name(with extension) to be given \
                         to the resource on download e.g /home/user/Documents/resource.zip', default=None)
     args = vars(parser.parse_args())
-    downloader = GDownloader(args['shareable_link'], args["full_path"])
-    downloader.download()
-    print(f"Downloaded to location {downloader.filename}\nSize of download {round(downloader.total_size, 2)}MB")
+    if not args['csv_path'] and args['shareable_link']:
+        downloader = GDownloader(args['shareable_link'], args["full_path"])
+        downloader.download()
+    elif args['csv_path']:
+        create_csv_downloads(args['csv_path'])
