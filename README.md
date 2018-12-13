@@ -10,8 +10,8 @@ Command line tool for downloading a google drive utility given the shareable lin
 
 ## Args
 
-- -sl','--shareable-link' 
-  Shareable link of resource
+- -sl or --shareable-link <br/>
+    Shareable link of resource
 
-- -path','--full-path
+- -path or --full-path <br/>
   Full path plus name(with extension) to be given to the resource on download e.g /home/user/Documents/resource.zip
