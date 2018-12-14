@@ -46,11 +46,8 @@ jobs:
             cd gddownloader
             python tests/__init__.py
 
-      - store_artifacts:
-          path: test-reports
-          destination: test-reports
-
     test:
+      
       post:
         - coverage run gddownloader/tests/*.py
         - coverage report
