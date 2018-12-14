@@ -8,7 +8,6 @@ import sys
 import urllib
 from urllib.request import urlopen, urlretrieve
 
-import numpy as np
 import pandas as pd
 import progressbar as pb
 
