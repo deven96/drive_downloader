@@ -48,6 +48,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
+            cd gddownloader
             python __tests__/__init__.py
 
       - store_artifacts:
