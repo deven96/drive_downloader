@@ -44,9 +44,9 @@ jobs:
           name: coveralls code coverage
           command: |
             cd gddownloader
-            coverage run tests/*.py
-            coverage report
-            coveralls        
+      - coverage run tests/*.py
+      - coverage report
+      - coveralls        
 
       - run:
           name: run tests
