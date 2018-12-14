@@ -1,3 +1,5 @@
 progressbar
 urllib3
 pandas
+coverage
+coveralls
