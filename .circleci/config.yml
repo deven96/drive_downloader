@@ -38,12 +38,16 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
+
         
-      # run tests!
-      # this example uses Django's built-in test-runner
-      # other common Python testing frameworks include pytest and nose
-      # https://pytest.org
-      # https://nose.readthedocs.io
+      - run:
+          name: coveralls code coverage
+          command: |
+            cd gddownloader
+            coverage run tests/*.py
+            coverage report
+            coveralls        
+
       - run:
           name: run tests
           command: |
@@ -55,11 +59,4 @@ jobs:
           path: test-reports
           destination: test-reports
 
-      - run:
-          name: coveralls code coverage
-          command: |
-            cd gddownloader
-            coverage run tests/*.py
-            coverage report
-            coveralls
           
