@@ -10,7 +10,7 @@ with open("README.md", "r") as fh:
 
 
 setuptools.setup(
-    name="GDownloader",
+    name="GdDownloader",
     version="0.0.1",
     author='Domnan Diretnan, Mmadu Manasseh',
     author_email="diretnandomnan@gmail.com",
