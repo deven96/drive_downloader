@@ -1,1 +1,1 @@
-from downloader import GDownloader, CsvGDownloader
+from .downloader import GDownloader, CsvGDownloader

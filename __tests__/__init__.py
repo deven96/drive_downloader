@@ -9,12 +9,13 @@ https://drive.google.com/uc?export=download&id=1Rp4Pu257IlfuoFX3sEarm8Mgl75vi1U5
 >>> csv_path = "example.csv"
 >>> csvdwnloader = CsvGDownloader(csv_path)
 >>> print(round(csvdwnloader.total_size, 0))
-7
+7.0
 """
-
-from core import GDownloader, CsvGDownloader
 
 
 if __name__=="__main__":
     import doctest
-    doctest.testmod()
+    import sys, os
+    sys.path.insert(0, os.getcwd())
+    from core import GDownloader, CsvGDownloader
+    doctest.testmod(verbose=True)

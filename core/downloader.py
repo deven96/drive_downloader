@@ -87,7 +87,7 @@ class CsvGDownloader:
         if not str(self.csv_path).endswith('.csv'):
             raise Exception("Not a valid (.csv) file")
         self.df = pd.read_csv(csv_path, header=None).fillna("None")
-        self.main_pb = pb.ProgressBar(maxval=total_size)
+        self.main_pb = pb.ProgressBar(maxval=self.total_size)
 
     @property
     def gdownloader_list(self):
