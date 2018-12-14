@@ -46,9 +46,9 @@ jobs:
             cd gddownloader
             python tests/__init__.py
 
-    test:
-      
-      post:
-        - coverage run gddownloader/tests/*.py
-        - coverage report
-        - coveralls          
+  test:
+    
+    post:
+      - coverage run gddownloader/tests/*.py
+      - coverage report
+      - coveralls          
