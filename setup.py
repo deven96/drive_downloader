@@ -9,7 +9,7 @@ requires = [line.strip('\n') for line in open(REQUIREMENTS).readlines()]
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 
 # ensure that once a tag is created,  on master, it is pushed to pypi
 class VerifyVersionCommand(install):
