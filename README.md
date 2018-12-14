@@ -2,7 +2,7 @@
 
 Package to download files from google drive given shared link
 
-[![CircleCI](https://circleci.com/gh/deven96/drive_downloader.svg?style=shield)](https://circleci.com/gh/deven96/drive_downloader)
+[![CircleCI](https://circleci.com/gh/deven96/drive_downloader.svg?style=shield)](https://circleci.com/gh/deven96/drive_downloader) ![Coverage](gddownloader/coverage.svg)
 
 
 ## Installation
