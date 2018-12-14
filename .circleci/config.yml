@@ -45,7 +45,7 @@ jobs:
             . venv/bin/activate
             cd gddownloader
             python tests/__init__.py
-            coverage run /tests/*.py
+            coverage run tests/*.py
             coverage report
             coveralls
        
