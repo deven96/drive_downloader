@@ -19,9 +19,6 @@ jobs:
 
     steps:
       - checkout
-      - coverage run gddownloader/tests/*.py
-      - coverage report
-      - coveralls   
 
       # Download and cache dependencies
       - restore_cache:
@@ -48,4 +45,7 @@ jobs:
             . venv/bin/activate
             cd gddownloader
             python tests/__init__.py
+            coverage run /tests/*.py
+            coverage report
+            coveralls
        
