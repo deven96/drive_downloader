@@ -48,7 +48,7 @@ jobs:
 
   test:
     
-    post:
+    steps:
       - coverage run gddownloader/tests/*.py
       - coverage report
       - coveralls          
