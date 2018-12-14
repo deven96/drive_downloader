@@ -11,7 +11,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="GDownloader",
-    version="0.0.7",
+    version="0.0.1",
     author='Domnan Diretnan, Mmadu Manasseh',
     author_email="diretnandomnan@gmail.com",
     description="easy wrapper for downloading google drive files using only shareable link",

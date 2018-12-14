@@ -1,11 +1,11 @@
-# GDownloader
+# GdDownloader
 
 Package to download files from google drive given shared link
 
 ## Installation
 
 ```bash
-    pip install gdownloader
+    pip install gddownloader
 ```
 
 ## Development
@@ -17,7 +17,7 @@ Package to download files from google drive given shared link
 ## Running the tests
 
 ```bash
-    cd drive_downloader/gdownloader/
+    cd drive_downloader/gddownloader/
 ```
 
 ```bash
@@ -30,7 +30,7 @@ Files can be downloaded from google drive providing one has a valid shared link.
 One of two ways can be used to download the files : Single or according to an [example csv](gdownloader/example.csv)
 
 ```python
-    from gdownloader.core import GDownloader, CsvGDownloader
+    from gddownloader.core import GDownloader, CsvGDownloader
 
     # Single download
     share_link = r"https://drive.google.com/open?id=1Rp4Pu257IlfuoFX3sEarm8Mgl75vi1U5"
