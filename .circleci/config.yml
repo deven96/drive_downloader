@@ -37,16 +37,7 @@ jobs:
       - save_cache:
           paths:
             - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
-
-        
-      - run:
-          name: coveralls code coverage
-          command: |
-            cd gddownloader
-      - coverage run tests/*.py
-      - coverage report
-      - coveralls        
+          key: v1-dependencies-{{ checksum "requirements.txt" }}   
 
       - run:
           name: run tests
@@ -59,4 +50,8 @@ jobs:
           path: test-reports
           destination: test-reports
 
-          
+    test:
+      post:
+        - coverage run gddownloader/tests/*.py
+        - coverage report
+        - coveralls          
