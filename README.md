@@ -2,7 +2,7 @@
 
 Package to download files from google drive given shared link
 
-[![CircleCI](https://circleci.com/gh/deven96/drive_downloader.svg?style=shield)](https://circleci.com/gh/deven96/drive_downloader) ![Coverage](gddownloader/coverage.svg)
+[![CircleCI](https://circleci.com/gh/deven96/drive_downloader.svg?style=shield)](https://circleci.com/gh/deven96/drive_downloader)
 
 
 ## Installation
@@ -24,7 +24,7 @@ Package to download files from google drive given shared link
 ```
 
 ```bash
-    python __tests__/__init__.py
+    python tests/__init__.py
 ```
 
 ## Usage

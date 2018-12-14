@@ -54,4 +54,10 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: test-reports
+
+    post:
+        - cd gddownloader
+        - coverage run tests/*.py
+        - coverage report
+        - coveralls
           
