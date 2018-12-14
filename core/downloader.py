@@ -1,16 +1,11 @@
 """
- Custom scipt to run command line tool that downloads a file from google drive script given
-    the shareable link
+ Defined Classes that handle single and multi download scenarios
 
 """
-
-import argparse
 import os
 import re
 import sys
-import time
 import urllib
-from multiprocessing.dummy import Pool
 from urllib.request import urlopen, urlretrieve
 
 import numpy as np
@@ -18,14 +13,14 @@ import pandas as pd
 import progressbar as pb
 
 
-class GDownloader():
+class GDownloader:
     """
         Download Handler
     """
     def __init__(self, share_link, path=None):
         self.share_link = share_link
         if str(path).startswith("~"):
-            sys.exit("Please do not use tilde(~) to denote home location")
+            raise Exception("Please do not use tilde(~) to denote home location")
         else:
             self.path = path
         #get site info
@@ -34,7 +29,7 @@ class GDownloader():
         ma = re.findall(r"ma=\d+", alt_svc)[0]
         #extract int
         self.total_size = int(ma.replace("ma=", "")) / (1024 * 1024)
-        self.filename = None
+        self.filename = "Unassigned"
         self.headers = None
         #progress bar
         self.pbar = pb.ProgressBar(maxval=self.total_size)
@@ -50,7 +45,7 @@ class GDownloader():
         replace = "https://drive.google.com/open?"
         drive_download = "https://drive.google.com/uc?export=download&"
         if not self.share_link.startswith(drive_share):
-            sys.exit("Link given is not a valid google drive download link")
+            raise Exception("Link given is not a valid google drive download link")
         else:
             return self.share_link.replace(replace, drive_download)
     
@@ -82,51 +77,76 @@ class GDownloader():
             print(f"Downloaded to location {self.filename}\nSize of download {round(self.total_size, 2)}MB")
 
 
-def create_csv_downloads(csv_path):
-    """ 
-        parses a csv of (shareable_link, path)
+class CsvGDownloader:
     """
-    downloader_list = list()
-    total_size = 0
-    if not str(csv_path).endswith('.csv'):
-        sys.exit("Not a valid (.csv) file")
-    try:
-        df = pd.read_csv(csv_path, header=None).fillna("None")
-        for i in range(0, len(df)):
-            path = df.iloc[i][1]
-            shareable_link = df.iloc[i][0]
+        Handles multiple downloads using csv
+    """
+    def __init__(self, csv_path):
+        self.csv_path = csv_path 
+        self.size_list = []
+        if not str(self.csv_path).endswith('.csv'):
+            raise Exception("Not a valid (.csv) file")
+        self.df = pd.read_csv(csv_path, header=None).fillna("None")
+        self.main_pb = pb.ProgressBar(maxval=total_size)
+
+    @property
+    def gdownloader_list(self):
+        downloader_list = []
+        for i in range(0, len(self.df)):
+            path = self.df.iloc[i][1]
+            shareable_link = self.df.iloc[i][0]
             downloader = None
             if path == "None":
                 downloader = GDownloader(shareable_link)
-                total_size += downloader.total_size
-                downloader_list.append(downloader)
             else:
                 downloader = GDownloader(shareable_link, path)
-                total_size += downloader.total_size
-                downloader_list.append(downloader)
-        main_pb = pb.ProgressBar(maxval=total_size)
-        main_pb.start()
-        for i in downloader_list:
+            downloader_list.append(downloader)
+        return downloader_list
+
+    @property
+    def total_size(self):
+        """
+            Combined size of all files to be downloaded
+        """
+        size = 0
+        for i in self.gdownloader_list:
+            size += i.total_size
+        return size
+
+    def __listfromgdownloader(self, attr):
+        """
+            Generates any attribute list from gdownloader (private)
+
+            attr[str]: name of attribute to get
+        """
+        output = []
+        for i in self.gdownloader_list:
+            output.append(getattr(i, attr))
+        return output
+    
+    @property
+    def filenames(self):
+        """
+            List of the final filenames as stored on download
+        """
+        return self.__listfromgdownloader("filename")
+
+    @property
+    def sizes(self):
+        """
+            List of the individual sizes 
+        """
+        return self.__listfromgdownloader("total_size")   
+
+
+    def download(self):
+        """
+            Downloads the files from csv using urllib
+        """      
+        self.main_pb.start()
+        for i in self.gdownloader_list:
             i.download()
-            main_pb.update(i.total_size)
+            self.main_pb.update(i.total_size)
         main_pb.finish()
-        print(f"Total Download Finished, total_size was {round(total_size, 2)}MB")
-    except Exception as e:
-        sys.exit(e)
+        print(f"Total Download Finished, total_size was {round(self.total_size, 2)}MB")
 
-
-
-if __name__ == "__main__":
-    #setup command line arguments
-    parser = argparse.ArgumentParser(description='Google Drive Resource Downloader')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-csv', '--csv_path', help='full path to csv file of shareable links and paths')
-    group.add_argument('-sl','--shareable-link', help='Shareable link of resource')
-    parser.add_argument('-path','--full-path', help='Full path plus name(with extension) to be given \
-                        to the resource on download e.g /home/user/Documents/resource.zip', default=None)
-    args = vars(parser.parse_args())
-    if not args['csv_path'] and args['shareable_link']:
-        downloader = GDownloader(args['shareable_link'], args["full_path"])
-        downloader.download()
-    elif args['csv_path']:
-        create_csv_downloads(args['csv_path'])
