@@ -49,7 +49,7 @@ jobs:
           command: |
             . venv/bin/activate
             cd gddownloader
-            python __tests__/__init__.py
+            python tests/__init__.py
 
       - store_artifacts:
           path: test-reports
