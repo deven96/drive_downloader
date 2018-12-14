@@ -1,8 +1,9 @@
 # GdDownloader 
 
-[![CircleCI](https://circleci.com/gh/deven96/drive_downloader.svg?style=svg)](https://circleci.com/gh/deven96/drive_downloader)
-
 Package to download files from google drive given shared link
+
+[![CircleCI](https://circleci.com/gh/deven96/drive_downloader.svg?style=shield)](https://circleci.com/gh/deven96/drive_downloader)
+
 
 ## Installation
 
