@@ -30,7 +30,7 @@ Package to download files from google drive given shared link
 ## Usage
 
 Files can be downloaded from google drive providing one has a valid shared link.
-One of two ways can be used to download the files : Single or according to an [example csv](gdownloader/example.csv)
+One of two ways can be used to download the files : Single or according to an [example csv](gddownloader/example.csv)
 
 ```python
     from gddownloader.core import GDownloader, CsvGDownloader
