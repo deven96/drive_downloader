@@ -135,7 +135,14 @@ class CsvGDownloader:
         """
             List of the individual sizes 
         """
-        return self.__listfromgdownloader("total_size")   
+        return self.__listfromgdownloader("total_size")  
+      
+    @property
+    def download_links(self):
+        """
+            List of the individual sizes 
+        """
+        return self.__listfromgdownloader("download_link")   
 
 
     def download(self):
