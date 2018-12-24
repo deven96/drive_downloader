@@ -2,7 +2,7 @@
 
 Package to download files from google drive given shared link
 
-[![CircleCI](https://circleci.com/gh/deven96/drive_downloader.svg?style=shield)](https://circleci.com/gh/deven96/drive_downloader) [![PyPI version](https://badge.fury.io/py/GdDownloader.svg)](https://badge.fury.io/py/GdDownloader) [![Coverage Status](https://coveralls.io/repos/github/deven96/drive_downloader/badge.svg?branch=master)](https://coveralls.io/github/deven96/drive_downloader?branch=master)
+[![Build Status](https://travis-ci.org/deven96/drive_downloader.svg?branch=master)](https://travis-ci.com/deven96/drive_downloader) [![PyPI version](https://badge.fury.io/py/GdDownloader.svg)](https://badge.fury.io/py/GdDownloader) [![Coverage Status](https://coveralls.io/repos/github/deven96/drive_downloader/badge.svg?branch=master)](https://coveralls.io/github/deven96/drive_downloader?branch=master)
 
 - [GdDownloader](#gddownloader)
   - [Installation](#installation)
