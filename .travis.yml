@@ -10,19 +10,14 @@ branches:
 # Command to install dependencies.
 install:
   - pip install -r requirements.txt
-  - python setup.py -q install
 
 # Build script (If successfully built - no errors)
 script:
   # - run tests
-  - cd gddownloader
-  - python tests/__init__.py
-  # - run coverage
-  - coverage run tests/*.py
-  - coverage report
-  - coveralls
+  - ./test_and_coverage.sh
 after_success:
   - ./docs.sh
+  - python setup.py -q install
 
 deploy:
   provider: pypi

@@ -19,3 +19,4 @@ rm -r ./docs
 git add .
 git commit -am "rebuilt docs"
 git push -q https://${GITHUB_TOKEN}@github.com/deven96/drive_downloader.git gh-pages --force
+git checkout master
