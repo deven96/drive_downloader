@@ -1,4 +1,4 @@
-progressbar
+progressbar==2.5
 urllib3
 pandas
 coverage
