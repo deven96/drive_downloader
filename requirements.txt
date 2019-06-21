@@ -1,6 +1,6 @@
 progressbar==2.5
 urllib3==1.25.3
-pandas
+pandas==0.24.2
 coverage
 coveralls
 sphinx
