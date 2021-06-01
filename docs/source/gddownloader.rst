@@ -6,13 +6,13 @@ Subpackages
 
 .. toctree::
 
-    gddownloader.core
-    gddownloader.tests
+   gddownloader.core
+   gddownloader.tests
 
 Module contents
 ---------------
 
 .. automodule:: gddownloader
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
